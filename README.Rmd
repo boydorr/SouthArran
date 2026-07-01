@@ -1,0 +1,95 @@
+---
+title: "README File"
+author: "Sarah Stevenson"
+date: "2026-06-11"
+output: html_document
+---
+
+### Project Description 
+#### Overview of project
+
+This project combines long-term benthic survey datasets collected within the South Arran Marine Protected Area (MPA). The data are standardised and cleaned, with a particular focus on taxonomic records and survey metadata, to create a consistent dataset suitable for biological analyses.
+
+**Main features:**
+
+- Community Structure and taxonomic diversity analyses 
+
+- Construction of a functional trait matrix for species recorded in survey datasets
+
+- Biological Trait Analysis (BTA)
+
+- Evaluation of survey effort sufficiency and sampling completeness
+
+### Usage 
+Instructions for reproducing the data cleaning, processing and analysis workflow will be included
+
+### Contents
+
+#### Functions- Code
+*function_species_data.R*
+- Read in function for species survey data (cleans and validates taxonomy)
+
+*function_grab_data.R* 
+- Read in function for grabsite data- environmental (PSA and sediment classification) and spatial (depth, latitude and longitude)
+
+- Validate function that crossreferences the grabsite and date information within grab dataframe and species survey dataframe to look for errors
+
+*map.R*
+- Map of the survey sites across the years
+
+#### Survey and Grab Data
+Survey Data was extracted from NatureScot reports, corresponds with excel files in survey_data and grab_data folders.
+
+2012 
+*"species_data_2012.xlsx"* 
+https://www.nature.scot/sites/default/files/2025-06/naturescot-commissioned-report-539.pdf
+
+2013 
+*"species_data_2013.xlsx"* 
+https://www.nature.scot/sites/default/files/2025-06/naturescot-commissioned-report-745.pdf
+
+2015
+- July 
+*"species_data_2015_1.xlsx"*
+https://www.nature.scot/doc/naturescot-commissioned-report-945-infaunal-and-psa-analyses-benthic-samples-collected-around-isle
+
+- September 
+*"species_data_2015_2.xlsx"*
+https://www.nature.scot/doc/naturescot-commissioned-report-946-infaunal-and-psa-analyses-benthic-samples-collected-south-arran
+
+2022
+*"species_data_2022.xlsx"* 
+Survey data provided by Dr. Kelly Saunders**
+
+#### Map details
+Folder - *Fishing measures relevant to South Arran*
+Shapefiles
+Provided by Dr. Kelly Saunders, NatureScot**
+
+#### Additional 
+**Excel Files**
+*"unassigned species list.xlsx"* - name corrections to be read through before submitting names through the WoRMS database
+
+
+#### Taxonomic Information 
+Taxonomic names and classifications were validated using the World Register of Marine Species (WoRMS)
+https://www.marinespecies.org/aphia.php
+
+
+#### Trait Information
+*"biotic.csv"* - An csv file that returns species taxonomic information and trait information. Accessed [16/06/2026]: https://api.mba.ac.uk/help_marlin 
+
+
+### Credits 
+
+**Supervisors:**
+Richard Reeve, University of Glasgow
+
+Kelly Saunders, NatureScot
+
+### Contact Information 
+Sarah Stevenson 
+
+3170686S@student.gla.ac.uk 
+
+MSc Project, University of Glasgow 
