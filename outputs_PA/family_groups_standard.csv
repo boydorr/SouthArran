@@ -1,0 +1,139 @@
+phylum,family,order,n_species,species,any_in_biotic
+Annelida,Spionidae,Spionida,12,Spiophanes kroyeri; Aonides oxycephala; Laonice bahusiensis; Dipolydora coeca; Prionospio cirrifera; Spionidae; Spio decorata; Prionospio fallax; Laonice; Prionospio; Prionospio polybranchiata; Pseudopolydora pulchra,FALSE
+Annelida,Cirratulidae,Terebellida,10,Chaetozone zetlandica; Chaetozone gibber; Aphelochaeta; Kirkegaardia dorsobranchialis; Chaetozone; Cirratulidae; Caulleriella alata; Chaetozone christiei; Cirratulus; Kirkegaardia,FALSE
+Annelida,Syllidae,Phyllodocida,9,Pseudosyllis brevipennis; Sphaerosyllis taylori; Syllis armillaris; Exogone verugera; Sphaerosyllis; Eurysyllis tuberculata; Exogone dispar; Syllis garciai; Parexogone hebes,FALSE
+Annelida,Maldanidae,NA,8,Praxillella affinis; Maldanidae; Euclymene; Euclymene oerstedii; Praxillella praetermissa; Clymenura; Euclymene lombricoides; Rhodine gracilior,FALSE
+Mollusca,Veneridae,Venerida,8,Clausinella fasciata; Dosinia exoleta; Gouldia minima; Dosinia; Dosinia lupinus; Chamelea striatula; Tapes; Venus casina,FALSE
+Annelida,Ampharetidae,Terebellida,6,Ampharete lindstroemi; Ampharetidae; Sosane sulcata; Anobothrus gracilis; Ampharetinae; Ampharete,FALSE
+Annelida,Polynoidae,Phyllodocida,6,Polynoidae; Malmgrenia mcintoshi; Harmothoe; Malmgrenia marphysae; Malmgrenia; Harmothoe extenuata,FALSE
+Annelida,Terebellidae,Terebellida,6,Polycirrus; Polycirrini; Pista cristata; Terebellidae; Amphitrite cirrata; Pista,FALSE
+Annelida,Lumbrineridae,Eunicida,5,Lumbrineris cingulata; Lumbrineridae; Lumbrineris; Scoletoma fragilis; Abyssoninoe hibernica,FALSE
+Annelida,Phyllodocidae,Phyllodocida,5,Nereiphylla rubiginosa; Eumida sanguinea; Phyllodocidae; Eumida bahusiensis; Eulalia bilineata,FALSE
+Annelida,Sabellidae,Sabellida,5,Sabellidae; Jasmineira caudata; Chone filicaudata; Euchone; Jasmineira elegans,FALSE
+Annelida,Serpulidae,Sabellida,5,Hydroides norvegica; Spirobranchus triqueter; Spirobranchus; Serpulidae; Spirobranchus lamarcki,FALSE
+Annelida,Golfingiidae,Sipuncula,4,Golfingia (Golfingia) vulgaris vulgaris; Golfingia (Golfingia) elongata; Phascolion (Phascolion) strombus strombus; Thysanocardia procera,FALSE
+Annelida,Sigalionidae,Phyllodocida,4,Pholoe baltica; Pholoe inornata; Pholoe; Sthenelais limicola,FALSE
+Annelida,Trichobranchidae,Terebellida,4,Terebellides stroemii; Trichobranchus roseus; Trichobranchus; Trichobranchus glacialis,FALSE
+Echinodermata,NA,NA,4,Ophiuroidea; Echinoidea; Asteroidea; Holothuroidea,FALSE
+Mollusca,Psammobiidae,Cardiida,4,Gari fervensis; Gari tellinella; Gari; Gari costulata,FALSE
+Annelida,Capitellidae,NA,3,Notomastus; Dasybranchus; Capitellidae,FALSE
+Annelida,Glyceridae,Phyllodocida,3,Glycera unicornis; Glycera celtica; Glyceridae,FALSE
+Annelida,Hesionidae,Phyllodocida,3,Oxydromus flexuosus; Hesiospina aurantiaca; Psamathe fusca,FALSE
+Annelida,Oweniidae,NA,3,Galathowenia oculata; Oweniidae; Galathowenia fragilis,FALSE
+Annelida,Pectinariidae,Terebellida,3,Amphictene auricoma; Lagis koreni; Pectinaria belgica,FALSE
+Arthropoda,Corophiidae,Amphipoda,3,Leptocheirus pectinatus; Corophium; Leptocheirus hirsutimanus,FALSE
+Arthropoda,NA,NA,3,Ostracoda; Copepoda; Crustacea,FALSE
+Echinodermata,Ophiuridae,Ophiurida,3,Ophiuridae; Ophiocten affinis; Ophiura,FALSE
+Mollusca,Cardiidae,Cardiida,3,Papillicardium minimum; Parvicardium; Parvicardium pinnulatum,FALSE
+Mollusca,Lasaeidae,Galeommatida,3,Kurtiella bidentata; Tellimya ferruginosa; Kellia suborbicularis,FALSE
+Mollusca,Nuculidae,Nuculida,3,Ennucula tenuis; Nucula nucleus; Nucula hanleyi,FALSE
+Mollusca,Rissoidae,Littorinimorpha,3,Alvania punctura; Onoba semicostata; Rissoa parva,FALSE
+Mollusca,NA,NA,3,Thracioidea; Bivalvia; Gastropoda,FALSE
+Annelida,Flabelligeridae,Terebellida,2,Diplocirrus glaucus; Diplocirrus stopbowitzi,FALSE
+Annelida,Nephtyidae,Phyllodocida,2,Nephtys kersivalensis; Nephtys,FALSE
+Arthropoda,Caprellidae,Amphipoda,2,Phtisica marina; Pseudoprotella phasma,FALSE
+Arthropoda,Dexaminidae,Amphipoda,2,Dexamine spinosa; Dexamine thea,FALSE
+Arthropoda,Diastylidae,Cumacea,2,Diastylis cornuta; Diastylis rugosa,FALSE
+Arthropoda,Lysianassidae,Amphipoda,2,Lysianassa plumosa; Socarnes erythrophthalmus,FALSE
+Arthropoda,Maeridae,Amphipoda,2,Animoceradocus semiserratus; Othomaera othonis,FALSE
+Arthropoda,Paguridae,Decapoda,2,Paguridae; Anapagurus hyndmanni,FALSE
+Arthropoda,Phoxocephalidae,Amphipoda,2,Harpinia antennaria; Metaphoxus fultoni,FALSE
+Arthropoda,Tryphosidae,Amphipoda,2,Tryphosa nana; Lepidepecreum longicorne,FALSE
+Chordata,Styelidae,Stolidobranchia,2,Polycarpa; Pelonaia corrugata,FALSE
+Cnidaria,Edwardsiidae,Actiniaria,2,Edwardsiidae; Edwardsia claparedii,FALSE
+Echinodermata,Amphiuridae,Amphilepidida,2,Amphiuridae; Amphipholis squamata,FALSE
+Echinodermata,Synaptidae,Apodida,2,Leptosynapta bergensis; Labidoplax buskii,FALSE
+Mollusca,Leptochitonidae,Lepidopleurida,2,Leptochiton asellus; Leptochiton cancellatus,FALSE
+Mollusca,Tellinidae,Cardiida,2,Moerella donacina; Arcopagia crassa,FALSE
+Mollusca,Thraciidae,NA,2,Thracia phaseolina; Thracia,FALSE
+Mollusca,Thyasiridae,Lucinida,2,Thyasira flexuosa; Thyasira,FALSE
+Annelida,Acrocirridae,Terebellida,1,Macrochaeta,FALSE
+Annelida,Aphroditidae,Phyllodocida,1,Aphroditidae,FALSE
+Annelida,Apistobranchidae,Spionida,1,Apistobranchus tullbergi,FALSE
+Annelida,Enchytraeidae,Enchytraeida,1,Grania,FALSE
+Annelida,Eunicidae,Eunicida,1,Lysidice unicornis,FALSE
+Annelida,Magelonidae,NA,1,Magelona alleni,FALSE
+Annelida,Melinnidae,Terebellida,1,Melinna palmata,FALSE
+Annelida,Nereididae,Phyllodocida,1,Eunereis longissima,FALSE
+Annelida,Onuphidae,Eunicida,1,Aponuphis bilineata,FALSE
+Annelida,Opheliidae,NA,1,Ophelina acuminata,FALSE
+Annelida,Paraonidae,NA,1,Paradoneis lyra,FALSE
+Annelida,Pilargidae,Phyllodocida,1,Ancistrosyllis groenlandica,FALSE
+Annelida,Polygordiidae,NA,1,Polygordius,FALSE
+Annelida,Sphaerodoridae,Phyllodocida,1,Sphaerodorum gracilis,FALSE
+Annelida,NA,Sipuncula,1,Sipuncula,FALSE
+Annelida,NA,Terebellida,1,Terebellida,FALSE
+Annelida,NA,NA,1,Polychaeta,FALSE
+Arthropoda,Acidostomatidae,Amphipoda,1,Acidostoma obesum,FALSE
+Arthropoda,Ammotheidae,Pantopoda,1,Achelia echinata,FALSE
+Arthropoda,Ampeliscidae,Amphipoda,1,Ampelisca,FALSE
+Arthropoda,Anthuridae,Isopoda,1,Anthura gracilis,FALSE
+Arthropoda,Aoridae,Amphipoda,1,Aora typica,FALSE
+Arthropoda,Atylidae,Amphipoda,1,Nototropis vedlomensis,FALSE
+Arthropoda,Axiidae,Decapoda,1,Calocaris macandreae,FALSE
+Arthropoda,Balanidae,Balanomorpha,1,Balanus balanus,FALSE
+Arthropoda,Bodotriidae,Cumacea,1,Vaunthompsonia cristata,FALSE
+Arthropoda,Calliopiidae,Amphipoda,1,Apherusa bispinosa,FALSE
+Arthropoda,Callipallenidae,Pantopoda,1,Callipallene brevirostris,FALSE
+Arthropoda,Cheirocratidae,Amphipoda,1,Cheirocratus,FALSE
+Arthropoda,Cirolanidae,Isopoda,1,Conilera cylindracea,FALSE
+Arthropoda,Galatheidae,Decapoda,1,Galathea intermedia,FALSE
+Arthropoda,Gnathiidae,Isopoda,1,Gnathia oxyuraea,FALSE
+Arthropoda,Miraciidae,Harpacticoida,1,Delavalia,FALSE
+Arthropoda,Oedicerotidae,Amphipoda,1,Westwoodilla caecula,FALSE
+Arthropoda,Photidae,Amphipoda,1,Gammaropsis maculata,FALSE
+Arthropoda,Polybiidae,Decapoda,1,Liocarcinus,FALSE
+Arthropoda,Processidae,Decapoda,1,Processa,FALSE
+Arthropoda,Sapphirinidae,Cyclopoida,1,Sapphirina,FALSE
+Arthropoda,Uristidae,Amphipoda,1,Ichnopus,FALSE
+Arthropoda,Verrucidae,Verrucomorpha,1,Verruca stroemia,FALSE
+Arthropoda,NA,Amphipoda,1,Amphipoda,FALSE
+Bryozoa,Bitectiporidae,Cheilostomatida,1,Hippoporina pertusa,FALSE
+Bryozoa,Calloporidae,Cheilostomatida,1,Amphiblestrum auritum,FALSE
+Bryozoa,Candidae,Cheilostomatida,1,Scrupocellaria scruposa,FALSE
+Bryozoa,Fenestrulinidae,Cheilostomatida,1,Fenestrulina malusii,FALSE
+Bryozoa,Lichenoporidae,Cyclostomatida,1,Disporella hispida,FALSE
+Bryozoa,Microporellidae,Cheilostomatida,1,Microporella ciliata,FALSE
+Bryozoa,Tubuliporidae,Cyclostomatida,1,Tubulipora,FALSE
+Chlorophyta,NA,NA,1,Chlorophyta,FALSE
+Chordata,Ascidiidae,Phlebobranchia,1,Ascidiidae,FALSE
+Chordata,NA,NA,1,Ascidiacea,FALSE
+Cnidaria,Campanulariidae,Leptothecata,1,Campanulariidae,FALSE
+Cnidaria,Exocoelactinidae,Actiniaria,1,Exocoelactis,FALSE
+Cnidaria,Haleciidae,Leptothecata,1,Halecium,FALSE
+Cnidaria,Sertulariidae,Leptothecata,1,Sertulariidae,FALSE
+Cnidaria,Synarachnactidae,Ceriantharia,1,Synarachnactis lloydii,FALSE
+Cnidaria,NA,Actiniaria,1,Actiniaria,FALSE
+Cnidaria,NA,NA,1,Anthozoa,FALSE
+Echinodermata,Ophiotomidae,Ophiacanthida,1,Ophiocomina nigra,FALSE
+Echinodermata,Ophiotrichidae,Amphilepidida,1,Ophiothrix,FALSE
+Mollusca,Callochitonidae,Callochitonida,1,Callochiton septemvalvis,FALSE
+Mollusca,Chaetodermatidae,Chaetodermatida,1,Chaetoderma nitidulum,FALSE
+Mollusca,Corbulidae,Myida,1,Varicorbula gibba,FALSE
+Mollusca,Cylichnidae,Cephalaspidea,1,Cylichna cylindracea,FALSE
+Mollusca,Dentaliidae,Dentaliida,1,Antalis entalis,FALSE
+Mollusca,Fissurellidae,Lepetellida,1,Emarginula fissura,FALSE
+Mollusca,Lottiidae,Nacellida,1,Testudinalia testudinalis,FALSE
+Mollusca,Lucinidae,Lucinida,1,Lucinoma boreale,FALSE
+Mollusca,Modiolidae,Mytilida,1,Modiolus,FALSE
+Mollusca,Myidae,Myida,1,Mya truncata,FALSE
+Mollusca,Naticidae,Littorinimorpha,1,Euspira nitida,FALSE
+Mollusca,Nuculanidae,Nuculanida,1,Nuculana minuta,FALSE
+Mollusca,Periplomatidae,NA,1,Cochlodesma praetenue,FALSE
+Mollusca,Pharidae,Adapedonta,1,Ensis,FALSE
+Mollusca,Philinidae,Cephalaspidea,1,Philine,FALSE
+Mollusca,Raphitomidae,Neogastropoda,1,Cyrillia linearis,FALSE
+Mollusca,Retusidae,Cephalaspidea,1,Retusa obtusa,FALSE
+Mollusca,Semelidae,Cardiida,1,Abra,FALSE
+Mollusca,Turritellidae,Caenogastropoda incertae sedis,1,Turritellinella tricarinata,FALSE
+Nematoda,NA,NA,1,Nematoda,FALSE
+Nemertea,Lineidae,Heteronemertea,1,Cerebratulus,FALSE
+Nemertea,NA,NA,1,Nemertea,FALSE
+Phoronida,Phoronidae,NA,1,Phoronis,FALSE
+Platyhelminthes,NA,NA,1,Platyhelminthes,FALSE
+Porifera,Clionaidae,Clionaida,1,Cliona,FALSE
+Porifera,Syconidae,Leucosolenida,1,Sycon ciliatum,FALSE
+Porifera,NA,NA,1,Porifera,FALSE
+Rhodophyta,Corallinaceae,Corallinales,1,Corallinaceae,FALSE
+Rhodophyta,Delesseriaceae,Ceramiales,1,Heterosiphonia plumosa,FALSE
+Rhodophyta,NA,NA,1,Rhodophyta,FALSE
