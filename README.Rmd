@@ -1,5 +1,5 @@
 ---
-title: "README File"
+title: "Project README File"
 author: "Sarah Stevenson"
 date: "2026-06-11"
 output: html_document
@@ -25,7 +25,13 @@ Instructions for reproducing the data cleaning, processing and analysis workflow
 
 ### Contents
 
-#### Functions- Code
+#### Scripts and Functions
+
+##### Scripts 
+*map.R*
+- Map of the survey sites across the years
+
+##### Functions
 *function_species_data.R*
 - Read in function for species survey data (cleans and validates taxonomy)
 
@@ -34,11 +40,14 @@ Instructions for reproducing the data cleaning, processing and analysis workflow
 
 - Validate function that crossreferences the grabsite and date information within grab dataframe and species survey dataframe to look for errors
 
-*map.R*
-- Map of the survey sites across the years
+*function_BTA.R* 
+- xxxxxx!
 
-#### Survey and Grab Data
+
+#### Data 
+##### Survey and Grab Data
 Survey Data was extracted from NatureScot reports, corresponds with excel files in survey_data and grab_data folders.
+- Species abundance count and the grab site it was collected from
 
 2012 
 *"species_data_2012.xlsx"* 
@@ -61,24 +70,39 @@ https://www.nature.scot/doc/naturescot-commissioned-report-946-infaunal-and-psa-
 *"species_data_2022.xlsx"* 
 Survey data provided by Dr. Kelly Saunders**
 
-#### Map details
+##### Map details
 Folder - *Fishing measures relevant to South Arran*
-Shapefiles
+Shapefiles of fishing management boundaries
 Provided by Dr. Kelly Saunders, NatureScot**
 
-#### Additional 
-**Excel Files**
-*"unassigned species list.xlsx"* - name corrections to be read through before submitting names through the WoRMS database
-
-
-#### Taxonomic Information 
+##### Taxonomic Information 
 Taxonomic names and classifications were validated using the World Register of Marine Species (WoRMS)
 https://www.marinespecies.org/aphia.php
 
 
-#### Trait Information
+##### Trait Information
+
 *"biotic.csv"* - An csv file that returns species taxonomic information and trait information. Accessed [16/06/2026]: https://api.mba.ac.uk/help_marlin 
 
+
+*Websites for manual assignment* 
+Databases to search species names for their traits to help with assignment of fuzzy coding.
+
+Encyclopedia of Life website
+https://eol.org/ 
+
+Sea Life Base
+https://www.sealifebase.ca/search.php 
+
+World Register of Marine Species (WoRMS)
+https://www.marinespecies.org/aphia.php
+
+##### Additional 
+**Folders** 
+
+*data* - Folder containing the survey data- the species abundance count (/survey_data), environmental information (/grab_data), fishing regulation boundaries (/Fishing measures relevant to South Arran), biotic.csv, and name corrections to be read through before submitting names through the WoRMS database (unassigned species list.xlsx).
+
+*outputs* - Folder containing the four outputs returned from the BTA function that creates a empty matrix for trait information and matches species names with the biotic dataframe. 
 
 ### Credits 
 
