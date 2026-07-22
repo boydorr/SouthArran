@@ -53,10 +53,18 @@ read_speciesdata <- function(
       
       # Split GrabSite into base site and grab number (replicates eg bucket 1)
       mutate(
-        GrabSite_base = str_replace(GrabSite, "-\\d+$", ""), # Extracting grab base/ site details eg G25-1 > G25, G03 > G03
+        GrabSite_base = str_replace(GrabSite, "-\\d+$", ""),
         GrabNumber    = case_when(
-          str_detect(GrabSite, "-\\d+$") ~ str_extract(GrabSite, "\\d+$"),  # Assigning grab sample number "1", "2", "3"
-          TRUE ~ "1"                                                          # if single grabs > "1"
+          str_detect(GrabSite, "-\\d+$") ~ str_extract(GrabSite, "\\d+$"),
+          TRUE ~ "1"
+        ),
+        
+        # Extract station code from GrabSite_base
+        GrabSite_station = case_when(
+          str_detect(GrabSite_base, "^[DT]\\d+G\\d+$") ~ str_extract(GrabSite_base, "^[DT]\\d+"),
+          str_detect(GrabSite_base, "^[DT]\\d+_") ~ str_extract(GrabSite_base, "^[DT]\\d+"),
+          str_detect(GrabSite_base, "^G\\d+$") ~ NA_character_,
+          TRUE ~ NA_character_
         )
       )
   }
