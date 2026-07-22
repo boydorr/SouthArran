@@ -13,7 +13,7 @@ read_grabdata <- function(path = "data/grab_data/grabsites.xlsx",
   #1. Read data
   grabs <- readxl::read_excel(
     path,
-    col_types = c("guess", "text", rep("guess", 8)) # need to set a text for date column cause 2022 data only has year
+    col_types = c("guess", "text", rep("guess", 6)) # need to set a text for date column cause 2022 data only has year
   ) %>%
     select(-matches("\\.\\.\\.\\d+$")) %>% # drop stray empty columns like previous
     
@@ -32,15 +32,29 @@ read_grabdata <- function(path = "data/grab_data/grabsites.xlsx",
     ) %>%
     select(-Date_raw)%>% 
     
-    # Split GrabSite into base site and grab replicate number
     mutate(
-      GrabSite_base = str_replace(GrabSite, "-\\d+$", ""),
-      GrabNumber    = case_when(
-        str_detect(GrabSite, "-\\d+$") ~ str_extract(GrabSite, "\\d+$"),
-        TRUE ~ "1"
+      GrabSite = str_trim(GrabSite),
+      
+      # Survey station (letters + digits at beginning) —
+      # but NOT if it's just "G" + digits (that's a grab number, not a station)
+      GrabSite_station = str_extract(GrabSite, "^(?!G\\d)[A-Za-z]+\\d+"),
+      
+      # Grab site base identifier — keep everything before the replicate "-"
+      GrabSite_base = str_extract(GrabSite, "^[^-]+"),
+      
+      # Numeric grab site number alone, if you need it separately
+      GrabSite_number = coalesce(
+        str_extract(GrabSite, "(?<=_)\\d+"),
+        str_extract(GrabSite, "(?<=G)\\d+")
+      ),
+      
+      # Replicate number after "-"
+      GrabNumber = coalesce(
+        str_extract(GrabSite, "(?<=-)\\d+$"),
+        "1"
       )
     )
-  
+    
   #3. Validate against records
   if (!is.null(records))
   {
