@@ -241,8 +241,7 @@ analyses_bio_patterns <- function(comm,
            shannon  = shannon,
            pielou   = pielou)
   
-  div_df[[period_col]] <- factor(div_df[[period_col]],
-                                 levels = c("Before", "After"))
+  div_df[[period_col]] <- as.factor(div_df[[period_col]])
   
   # Model formulas 
   explanatory_var <- paste(c(covariates, period_col), collapse = " + ") # management period and environmental covariates
