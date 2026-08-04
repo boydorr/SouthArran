@@ -1,0 +1,297 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+#### Setting up workspace 
+```{r}
+# supress warnings!!!
+
+# Loading libraries
+library(dplyr) # data manipulation
+library(tidyr) # tidy data, e.g. pivot data
+library(readxl) # read excel files
+library(purrr)     # apply functions over lists
+library(SHARK4R)   # match_worms_taxa — WoRMS taxonomy resolution
+library(tidyverse) # 
+library(stringr)   # str_trim, str_replace_all — string cleaning
+library(vegan)
+library(sf)        # For handling vector data
+library(terra)     # For handling raster data
+library(ggplot2)   # For data visualization
+library(mapview)   # For interactive mapping
+library(tmap) 
+library(iNEXT) 
+library(broom)
+library(FactoMineR)
+library(factoextra)
+library(lmerTest) 
+
+```
+### Data
+#### Reading in data
+** function that reads in first survey data
+```{r,message=FALSE}
+# Survey Data
+df_surveydata <- read_speciesdata()
+
+    # Turn year into numeric for further analysis 
+    df_surveydata <- df_surveydata %>%
+      mutate(year = as.numeric(year))
+
+    # Cleaned table for reference 
+    
+# Grab site information
+df_grabdata <- read_grabdata() #records = df_surveydata)
+```
+
+#### Presence and abscence 
+```{r}
+# create new dataframe (just 1 and 0)
+df_P_A_surveydata <- function_presence_and_absence(survey_data = df_surveydata)
+
+df_meta_PA <- prepare_community_data(df_survey = df_P_A_surveydata,
+                                  df_env = df_grabdata,
+                                  exclude_samples = c("G28_2013", "T2_01_2022"))
+
+combined_table_PA <- df_meta_PA$combined
+```
+
+### Data Prep for Analysis 
+```{r}
+# Preparing data for analysis- creating a combined species data and grab data
+  # only species included
+df_meta <- prepare_community_data(df_survey = df_surveydata,
+                                  df_env = df_grabdata,
+                                  exclude_samples = c("G28_2013", "T2_01_2022"))
+
+combined_table <- df_meta$combined
+```
+
+### BTA (Objective 2)
+#### BTA - Making Template
+```{r}
+# Making the BTA template files that have species matched with biotic 
+BTA_template <- build_empty_trait_matrix(survey_data = df_surveydata, 
+                                         output_dir = "/Users/sarahstevenson/Desktop/diss/SouthArran/outputs/abundance",
+                                         biotic_path= "data/biotic.csv")
+
+# Extracting trait modalities 
+trait_groups   <- BTA_template$trait_groups
+all_trait_cols <- unlist(trait_groups, use.names = FALSE)
+
+# Making the BTA template files that have species matched with biotic (PRESENCE and ABSENCE)
+BTA_P_A_template <- build_empty_trait_matrix(survey_data = df_P_A_surveydata,
+                                             output_dir = "/Users/sarahstevenson/Desktop/diss/SouthArran/outputs/P_A",
+                                             biotic_path= "data/biotic.csv")
+```
+
+#### BTA - Reading in filled trait matrix
+```{r}
+# Reading in the filled trait by taxon matrix 
+filled_matrix <- read_csv(
+  "/Users/sarahstevenson/Desktop/diss/SouthArran/outputs/abundance/trait_matrix_FILLED.csv",
+  col_types = cols(
+    .default = col_guess(),
+    !!!setNames(rep(list(col_double()), length(all_trait_cols)), all_trait_cols)))
+
+# Verifying BTA matrix is filled in correctly
+cleaned_matrix <- check_trait_matrix(filled_matrix, trait_groups = trait_groups)
+
+```
+
+#### BTA - Analysis
+##### Temporal 
+```{r}
+# With abundance (species count)
+  # Need names to match 
+    df_surveydata <- df_surveydata %>%
+      mutate(bta_name = case_when(
+        !is.na(accepted_name) & accepted_name != "" ~ accepted_name,
+        TRUE ~ SpeciesName_clean))
+
+# Running PCA
+results_PCA_abundunce <- run_bta_pca_workflow(
+  filled_matrix  = filled_matrix,
+  trait_groups   = trait_groups,
+  abundance_data = df_surveydata,
+  metadata_data  = df_meta$meta,
+  top_n_contrib  = 10,
+  taxon_col      = "bta_name",
+  sample_col     = "sample_id",
+  period_col     = "period",
+  phi_col        = "Mean_phi",
+  depth_col      = "Depth",
+  colors = c("Before" = "#1C77C3", "After" = "#FB8500"))
+
+
+# Sediment environment focus (Survey stations T)
+result_T <- run_bta_pca_workflow(
+  filled_matrix   = filled_matrix,        
+  trait_groups    = trait_groups,
+  abundance_data  = df_surveydata,       
+  metadata_data   = df_meta$meta,           
+  taxon_col       = "bta_name",
+  sample_col      = "GrabSite",
+  abund_col       = "value",
+  station_col     = "GrabSite_station",
+  station_filter  = "T",        # Selects stations starting with "T"
+  period_col      = "period",
+  phi_col         = "Mean_phi",
+  depth_col       = "Depth",
+  top_n_contrib   = 10,
+  colors = c("Before" = "#1C77C3", "After" = "#FB8500"))
+
+
+# Presence and absence (0 and 1 only)
+
+
+```
+
+### Community Structure Analysis (Objective 1)
+##### Temporal 
+```{r}
+#Obj 1 part 1
+results_nmds <- run_nmds_analysis(df_meta,
+                              group_col = "period",
+                              covariates = c("Mean_phi", "Depth"),
+                              run_simper = TRUE,
+                              colors = c("Before" = "#1C77C3", "After" = "#FB8500"))
+
+print(results_nmds$plot)
+results_nmds$permanova
+results_nmds$betadisper_anova
+results_nmds$simper
+
+# Obj1 part 2
+diversity_measurements <- analyses_bio_patterns(
+  comm        = df_meta$matrix,
+  meta        = df_meta$meta,
+  period_col  = "period",
+  covariates  = c("Mean_phi", "Depth"),
+  station_col = NULL) # moving forward can account for survey stations but to retain 2012/13 data it is set to NULL
+
+diversity_measurements$summary # coefficient table for all 3 metrics
+
+# species_richness <- diverstity_measurements$summary %>%
+  # dplyr::filter(response == "Richness") 
+    #to get just species richness and save as an object
+
+# Rounding values for inspection 
+diversity_measurements$summary %>%
+  mutate(
+    estimate  = signif(estimate, 3),
+    std.error = signif(std.error, 3),
+    statistic = round(statistic, 2),
+    p.value   = case_when(
+      p.value < 0.001 ~ "< 0.001",
+      TRUE ~ as.character(round(p.value, 3))))
+
+```
+
+### Spatial Analysis (Objective 3)
+##### Adding in protection zones, changing sediment type and depth into categorical variables
+```{r}
+# Reading in protection levels
+mpa_restrictions <- st_read("data/Fishing measures relevant to South Arran/Fishing measures relevant to South Arran.shp")
+
+if (!all(c("protection_level", "depth_category", "sediment_type_simple") %in% names(df_grabdata))) { # adding in safety block
+  
+# Adding all levels to environmental dataframe
+  df_grabdata <- add_zones_protect_depth_sedi(
+    df_env        = df_grabdata,
+    mpa_shapefile = mpa_restrictions,
+    df_sites      = df_grabdata,
+    site_col      = "GrabSite",
+    lon_col       = "Longitude",
+    lat_col       = "Latitude")
+}
+
+spatial_result <- prepare_community_data(df_surveydata, df_grabdata)
+spatial_result$meta %>% select(sample_id, GrabSite, protection_level, period, depth_category, sediment_type_simple ) 
+```
+
+### Community Structure Analysis (Objective 1)
+##### Spatial
+```{r}
+## NOTE: period_col here in place of management period is protection levels 
+
+# Obj 1 part 1 - by protection level
+results_nmds_protection <- run_nmds_analysis(spatial_result,
+                              group_col = "protection_level",
+                              covariates = c("Mean_phi", "Depth"),
+                              exclude_samples = c("T2_01_2022", "G28_2013"),
+                              run_simper = TRUE,
+                              colors = c("High" = "#0000CC",
+                                                   "Medium" = "#3366FF",
+                                                   "Low" = "#99FFFF",
+                                                   "Outside MPA"= "#CCCCCC"))
+
+print(results_nmds_protection$plot)
+results_nmds_protection$permanova
+results_nmds_protection$betadisper_anova
+results_nmds_protection$simper_top10_overall
+
+exclude_ids <- c("T2_01_2022", "G28_2013")
+keep <- !(spatial_result$meta$sample_id %in% exclude_ids)
+
+# Biodiversity measures
+diversity_measurements_protection <- analyses_bio_patterns(
+  comm        = spatial_result$matrix[keep, , drop = FALSE],
+  meta        = spatial_result$meta[keep, , drop = FALSE],
+  period_col  = "protection_level",
+  covariates  = c("Mean_phi", "Depth"),
+  station_col = NULL) 
+
+diversity_measurements_protection$summary
+
+# For viewing
+diversity_measurements_protection$summary %>%
+  mutate(
+    estimate  = signif(estimate, 3),
+    std.error = signif(std.error, 3),
+    statistic = round(statistic, 2),
+    p.value   = case_when(
+      p.value < 0.001 ~ "< 0.001",
+      TRUE ~ as.character(round(p.value, 3))))
+```
+
+#### BTA - Analysis
+##### Spatial 
+```{r}
+## NOTE: period_col here in place of management period is protection levels 
+
+results_PCA_abundance_protection <- run_bta_pca_workflow(
+  filled_matrix  = filled_matrix,
+  trait_groups   = trait_groups,
+  abundance_data = df_surveydata,
+  metadata_data  = spatial_result$meta,
+  top_n_contrib  = 10,
+  taxon_col      = "bta_name",
+  sample_col     = "sample_id",
+  period_col     = "protection_level",  # passing protection_level here instead of period
+  phi_col        = "Mean_phi",
+  depth_col      = "Depth",
+  colors = c("High" = "#0000CC",
+             "Medium" = "#3366FF",
+              "Low" = "#99FFFF",
+              "Outside MPA"= "#CCCCCC"))
+```
+
+### Species Accumulation Curve (Survey Effort Analysis)
+```{r}
+# Cleaning presence and absence data 
+df_meta_PA <- prepare_PA_data(df_survey = df_P_A_surveydata,
+                              df_env = df_grabdata,
+                              exclude_samples = c("G28_2013", "T2_01_2022"))
+
+PA_combined_table <- df_meta_PA$combined
+
+# Species Accumulation Curve 
+sac_output <- run_station_sac(PA_combined_table)
+sac_output$plot
+
+sac_output$inext_result
+
+
+```
