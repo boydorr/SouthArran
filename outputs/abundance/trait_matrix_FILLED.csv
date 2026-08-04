@@ -25,6 +25,7 @@ Aonides paucibranchiata,131107,species,Aonides,Spionidae,Spionida,Polychaeta,Ann
 Apherusa bispinosa,102160,species,Apherusa,Calliopiidae,Amphipoda,Malacostraca,Arthropoda,8,59,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,3,0,0,0,0,0,0,0,3
 Aponuphis bilineata,130452,species,Aponuphis,Onuphidae,Eunicida,Polychaeta,Annelida,36,178,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,3,0
 Arctica islandica,138802,species,Arctica,Arcticidae,Venerida,Bivalvia,Mollusca,19,34,TRUE,Medium(11-20 cm),100+ years,"Passive suspension feeder, Active suspension feeder, Surface deposit feeder, Sub-surface deposit feeder",Burrower,Bivalved,NA,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,3,1.5,1.5,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0
+Asbjornsenia pygmaea,879714,species,Asbjornsenia,Tellinidae,Cardiida,Bivalvia,Mollusca,5,22,FALSE,NA,NA,NA,NA,NA,NA,0,0,1.5,1.5,0,0,0,3,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0
 Ascidiacea,1839,class,NA,NA,NA,Ascidiacea,Chordata,9,31,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0.5,0.5,0.5,0.5,0.5,0.5,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,2.5,0,0,0.5
 Ascidiidae,103443,family,NA,Ascidiidae,Phlebobranchia,Ascidiacea,Chordata,9,42,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,2.5,0,0,0.5
 Balanus balanus,106213,species,Balanus,Balanidae,Balanomorpha,Thecostraca,Arthropoda,7,78,FALSE,NA,NA,NA,NA,NA,NA,3,0,0,0,0,0,0.5,2,0.5,0,0,0,0,3,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0,0,3,0,0,0
@@ -76,7 +77,7 @@ Harpinia antennaria,102960,species,Harpinia,Phoxocephalidae,Amphipoda,Malacostra
 Hesiospina aurantiaca,333615,species,Hesiospina,Hesionidae,Phyllodocida,Polychaeta,Annelida,9,31,FALSE,NA,NA,NA,NA,NA,NA,0,3,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,3
 Hiatella arctica,140103,species,Hiatella,Hiatellidae,Adapedonta,Bivalvia,Mollusca,29,67,TRUE,Small-medium(3-10cm),NA,"Passive suspension feeder, Active suspension feeder",Permanent attachment,NA,NA,3,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,3,0,3,0,0,0,0,0,0,3,0,0,0,0,3,0,0,0
 Hydroides norvegica,131009,species,Hydroides,Serpulidae,Sabellida,Polychaeta,Annelida,41,112,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,2.5,0.5,0,0,0,0,0,0,0,3,0,0,0,0,3,0,0,0,0,0,0,3,0,0,0
-Ichnopus,101614,genus,Ichnopus,Uristidae,Amphipoda,Malacostraca,Arthropoda,14,20,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3
+Ichnopus,101614,genus,Ichnopus,Uristidae,Amphipoda,Malacostraca,Arthropoda,15,21,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,3,0,0,0,0,0,0,0,3
 Jasmineira caudata,130920,species,Jasmineira,Sabellidae,Sabellida,Polychaeta,Annelida,10,27,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,3,0,0,0,0,0,0,3,0,0,0
 Jasmineira elegans,130921,species,Jasmineira,Sabellidae,Sabellida,Polychaeta,Annelida,5,22,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,3,0,0,0,0,3,0,0,0,0,3,0,0,0,0,3,0,0,0,0,0,0,3,0,0,0
 Kurtiella bidentata,345281,species,Kurtiella,Lasaeidae,Galeommatida,Bivalvia,Mollusca,55,271,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,3,0,0,0,0,0,0,0,0,3,0,3,0,0,0,0,0,0,3,0,0,0,0,0,0,3,0
@@ -95,6 +96,7 @@ Macrochaeta,129141,genus,Macrochaeta,Acrocirridae,Terebellida,Polychaeta,Annelid
 Magelona alleni,130266,species,Magelona,Magelonidae,NA,Polychaeta,Annelida,17,30,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,3,0,0,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0
 Malacostraca,1071,class,NA,NA,NA,Malacostraca,Arthropoda,1,23,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1.5,1.5,0,0,0,0,3,0,0,0,0,0,0,0,3
 Maldanidae,923,family,NA,Maldanidae,NA,Polychaeta,Annelida,14,23,FALSE,NA,NA,NA,NA,NA,NA,0,0,2.5,0.5,0,0,0,0,0,0,0,3,0,0,3,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0
+Malmgrenia,147006,genus,Malmgrenia,Polynoidae,Phyllodocida,Polychaeta,Annelida,13,25,FALSE,NA,NA,NA,NA,NA,NA,0,3,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,1.5,0,1.5,3,0,0,0,0,0,0,0,0,0,3
 Malmgrenia marphysae,152267,species,Malmgrenia,Polynoidae,Phyllodocida,Polychaeta,Annelida,15,76,FALSE,NA,NA,NA,NA,NA,NA,0,3,0,0,0,0,0,2.5,0.5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,3
 Malmgrenia mcintoshi,147007,species,Malmgrenia,Polynoidae,Phyllodocida,Polychaeta,Annelida,22,103,FALSE,NA,NA,NA,NA,NA,NA,0,3,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,3
 Mediomastus fragilis,129892,species,Mediomastus,Capitellidae,NA,Polychaeta,Annelida,59,308,TRUE,Small-medium(3-10cm),Insufficient information,Sub-surface deposit feeder,Burrower,Vermiform segmented,Not researched,0,0,3,0,0,0,0,0,0,1,1,1,0,3,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,0,3,0
@@ -102,7 +104,6 @@ Modiolus,138223,genus,Modiolus,Modiolidae,Mytilida,Bivalvia,Mollusca,12,149,FALS
 Modiolus modiolus,140467,species,Modiolus,Modiolidae,Mytilida,Bivalvia,Mollusca,9,35,TRUE,Medium(11-20 cm),51-100 years,"Passive suspension feeder, Active suspension feeder","Temporary attachment, Permanent attachment",Bivalved,NA,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,3,0,3,0,0,0,0,0,0,3,0,0,0,0,3,0,0,0
 Moerella donacina,147021,species,Moerella,Tellinidae,Cardiida,Bivalvia,Mollusca,25,84,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,3,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0
 Musculus subpictus,506128,species,Musculus,Mytilidae,Mytilida,Bivalvia,Mollusca,2,28,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,1.5,1.5,0,0,0,0,0,0,0,3,0,3,0,0,0,0,0,0,3,0,0,0,0,3,0,0,0
-Mya arenaria,140430,species,Mya,Myidae,Myida,Bivalvia,Mollusca,9,21,TRUE,Medium(11-20 cm),11-20 years,"Passive suspension feeder, Active suspension feeder",Burrower,Bivalved,NA,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,3,0,3,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0
 Mya truncata,140431,species,Mya,Myidae,Myida,Bivalvia,Mollusca,8,24,FALSE,Small-medium(3-10cm),NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,0,1,1,1,0,0,0,0,3,0,3,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0
 Mytilus edulis,140480,species,Mytilus,Mytilidae,Mytilida,Bivalvia,Mollusca,4,41,TRUE,Medium(11-20 cm),21-50 years,"Passive suspension feeder, Active suspension feeder","Temporary attachment, Permanent attachment",Bivalved,Not relevant,3,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,3,0,3,0,0,0,0,0,0,3,0,0,0,0,3,0,0,0
 Nematoda,799,genus,NA,NA,NA,NA,Nematoda,30,735,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,3
@@ -120,10 +121,8 @@ Nucula nitidosa,140589,species,Nucula,Nuculidae,Nuculida,Bivalvia,Mollusca,51,11
 Nucula nucleus,140590,species,Nucula,Nuculidae,Nuculida,Bivalvia,Mollusca,19,125,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,3,0,0,0,0,0,0,0,3,0,3,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0
 Nuculana minuta,140577,species,Nuculana,Nuculanidae,Nuculanida,Bivalvia,Mollusca,10,26,FALSE,Small(1-2cm),NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,3,0,0,0,0,0,0,3,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,3,0,0
 Ophiocomina nigra,125027,species,Ophiocomina,Ophiotomidae,Ophiacanthida,Ophiuroidea,Echinodermata,7,52,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,1.5,1.5,0,0,0,0,0,0,0,0,0,0,3,0,0,3,0
-Ophiocten affinis,124850,species,Ophiocten,Ophiuridae,Ophiurida,Ophiuroidea,Echinodermata,12,20,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0.5,2,0.5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,3,0
 Ophiura,123574,genus,Ophiura,Ophiuridae,Ophiurida,Ophiuroidea,Echinodermata,9,43,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,3,0
 Ophiuridae,123200,family,NA,Ophiuridae,Ophiurida,Ophiuroidea,Echinodermata,18,41,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,3,0
-Ophiuroidea,123084,class,NA,NA,NA,Ophiuroidea,Echinodermata,10,21,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,3,0,0,3,0
 Ostracoda,1078,class,NA,NA,NA,Ostracoda,Arthropoda,10,34,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,2.5,0,0,0.5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3
 Owenia fusiformis,130544,species,Owenia,Oweniidae,NA,Polychaeta,Annelida,84,1043,TRUE,Small-medium(3-10cm),3-5 years,"Passive suspension feeder, Active suspension feeder, Surface deposit feeder, Sub-surface deposit feeder",Burrower,Vermiform segmented,Not researched,0,0,0,0,0,3,0,0,0,1,1,1,0,0,3,0,0,1.5,1.5,0,0,0,0,3,0,0,0,0,0,0,0,0,3,0
 Oweniidae,975,family,NA,Oweniidae,NA,Polychaeta,Annelida,17,30,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,0,0,0,3,0,3,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0
@@ -133,7 +132,6 @@ Phaxas pellucidus,140737,species,Phaxas,Pharidae,Adapedonta,Bivalvia,Mollusca,21
 Pholoe baltica,130599,species,Pholoe,Sigalionidae,Phyllodocida,Polychaeta,Annelida,59,187,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,3
 Pholoe inornata,130601,species,Pholoe,Sigalionidae,Phyllodocida,Polychaeta,Annelida,33,118,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,3
 Phoronis,128545,genus,Phoronis,Phoronidae,NA,NA,Phoronida,48,116,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,3,0,0,0,0,0,0,3,0,0,0
-Phoronis muelleri,128549,species,Phoronis,Phoronidae,NA,NA,Phoronida,13,21,TRUE,Small-medium(3-10cm),1 year,"Passive suspension feeder, Active suspension feeder",NA,NA,NA,0,0,0,0,0,3,0,0,0,1,1,1,3,0,0,0,0,0,3,0,0,0,0,3,0,0,0,0,0,0,3,0,0,0
 Photis longicaudata,102383,species,Photis,Photidae,Amphipoda,Malacostraca,Arthropoda,33,151,TRUE,Very small(<1cm),NA,"Passive suspension feeder, Active suspension feeder","Swimmer, Burrower",NA,NA,0,0,0,0,0,3,1.5,1.5,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3
 Pisione remota,130707,species,Pisione,Sigalionidae,Phyllodocida,Polychaeta,Annelida,6,27,TRUE,Small-medium(3-10cm),NA,"Predator, Scavenger",Burrower,NA,NA,0,3,0,0,0,0,0,0,0,1,1,1,0,0,3,0,0,0,0,0,1.5,0,1.5,3,0,0,0,0,0,0,0,0,3,0
 Pista cristata,131516,species,Pista,Terebellidae,Terebellida,Polychaeta,Annelida,17,23,FALSE,Small-medium(3-10cm),NA,NA,NA,NA,NA,0,0,0,3,0,0,0,0,0,1,1,1,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0
@@ -146,6 +144,7 @@ Polynoidae,939,family,NA,Polynoidae,Phyllodocida,Polychaeta,Annelida,31,61,FALSE
 Praxillella affinis,130322,species,Praxillella,Maldanidae,NA,Polychaeta,Annelida,39,88,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,3,0,0,0,0,0,0,0,3,0,0,3,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0
 Prionospio cirrifera,131153,species,Prionospio,Spionidae,Spionida,Polychaeta,Annelida,24,51,FALSE,NA,1 year,NA,NA,NA,NA,0,0,3,0,0,0,0,0,3,0,0,0,1.5,1.5,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0
 Protodorvillea kefersteini,130041,species,Protodorvillea,Dorvilleidae,Eunicida,Polychaeta,Annelida,13,63,TRUE,NA,NA,"Predator, Scavenger",NA,NA,NA,0,3,0,0,0,0,0,0,3,0,0,0,3,0,0,0,0,0,0,0,1.5,0,1.5,3,0,0,0,0,0,0,0,0,0,3
+Psamathe fusca,152249,species,Psamathe,Hesionidae,Phyllodocida,Polychaeta,Annelida,7,23,FALSE,NA,NA,NA,NA,NA,NA,0,3,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,1.5,0,1.5,3,0,0,0,0,0,0,0,0,3,0
 Pseudoprotella phasma,101871,species,Pseudoprotella,Caprellidae,Amphipoda,Malacostraca,Arthropoda,11,62,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,3,0,0,0,0,0,0,3,0
 Pseudosyllis brevipennis,131373,species,Pseudosyllis,Syllidae,Phyllodocida,Polychaeta,Annelida,13,48,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,0,2.5,0.5,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,3,0
 Sabellidae,985,family,NA,Sabellidae,Sabellida,Polychaeta,Annelida,12,24,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,0,0,0,3,0,0,0,0,0,0,3,0,0,0,0,3,0,0,0,0,0,0,3,0,0,0
@@ -178,4 +177,5 @@ Turritellinella tricarinata,1381415,species,Turritellinella,Turritellidae,Caenog
 Urothoe elegans,103228,species,Urothoe,Urothoidae,Amphipoda,Malacostraca,Arthropoda,18,65,TRUE,Very small(<1cm),NA,"Surface deposit feeder, Sub-surface deposit feeder","Swimmer, Burrower",NA,NA,0,0,0,0,0,3,1.5,1.5,0,0,0,0,3,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3
 Varicorbula gibba,378492,species,Varicorbula,Corbulidae,Myida,Bivalvia,Mollusca,22,57,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,3,0,0,3,0,0,0,0,3,0,0,0,0,3,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0
 Vaunthompsonia cristata,110467,species,Vaunthompsonia,Bodotriidae,Cumacea,Malacostraca,Arthropoda,12,101,FALSE,Very small(<1cm),NA,NA,NA,NA,NA,0,0,0,0,0,3,1.5,1.5,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3
+Veneridae,243,family,NA,Veneridae,Venerida,Bivalvia,Mollusca,6,59,FALSE,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0,0,1,1,1,NA,NA,NA,NA,NA,0,3,0,0,0,0,0,0,3,0,0,0,0,0,3,0,0
 Verruca stroemia,106257,species,Verruca,Verrucidae,Verrucomorpha,Thecostraca,Arthropoda,7,228,FALSE,NA,NA,NA,NA,NA,NA,3,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,3,0,0,0,3,0,0,0
