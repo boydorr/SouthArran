@@ -92,14 +92,14 @@ run_station_sac <- function(PA_combined_table,
   #6. Plot
   sac_plot <- ggiNEXT(inext_result, type = 1) +
     theme_bw() +
-    labs(x = "Number of grabs", y = "Species richness")
+    labs(x = "Number of grabs", y = "Shannon Diversity")
   
   station_year_colours <- c(
       # T sites 
-      "T1_2015" = "#A6CEE3",
-      "T1_2022" = "#1F78B4",
-      "T2_2015" = "#8DD3C7",
-      "T2_2022" = "#008080",
+      "T1_2015" = "indianred1",
+      "T1_2022" = "red3",
+      "T2_2015" = "lightgoldenrod1",
+      "T2_2022" = "goldenrod2",
       "T3_2015" = "#B2DF8A",
       "T3_2022" = "#33A02C",
       "T4_2015" = "#9ECAE1",
@@ -107,24 +107,42 @@ run_station_sac <- function(PA_combined_table,
       # D sites 
       "D1_2015" = "#CAB2D6",
       "D1_2022" = "#6A3D9A",
-      "D3_2015" = "#FCCDE5",
-      "D3_2022" = "#C51B8A",
-      "D4_2015" = "#DADAEB",
-      "D4_2022" = "#54278F",
-      "D5_2015" = "#FBB4AE",
-      "D5_2022" = "#E31A1C",
-      "D6_2015" = "#E0C2FF",
-      "D6_2022" = "#7B3294")
+      "D3_2015" = "orange",
+      "D3_2022" = "darkorange2",
+      "D4_2015" = "#FCCDE5",
+      "D4_2022" = "#C51B8A",
+      "D5_2015" = "gray50",
+      "D5_2022" = "black",
+      "D6_2015" = "seagreen1",
+      "D6_2022" = "seagreen4")
   
   sac_plot <- sac_plot +
     scale_colour_manual(values = station_year_colours) +
     scale_fill_manual(values = station_year_colours)
   
   sac_plot$data <- sac_plot$data %>%
-    mutate(station_type = if_else(str_starts(Assemblage, "D"), "D sites", "T sites"))
+    mutate(station_type = if_else(str_starts(Assemblage, "D"), "D sites", "T sites"),
+           year = str_extract(Assemblage, "2015|2022"))
   
-  sac_plot <- sac_plot + facet_wrap(~ station_type, scales = "free_x")
+  # Add year/station_type into every layer's own private data (if it has one)
+  sac_plot$layers <- lapply(sac_plot$layers, function(l) {
+    if (is.data.frame(l$data)) {
+      l$data <- l$data %>%
+        mutate(station_type = if_else(str_starts(Assemblage, "D"), "D sites", "T sites"),
+               year = str_extract(Assemblage, "2015|2022"))
+    }
+    l
+  })
   
+  # Now map shape on just the point layer
+  point_idx <- which(sapply(sac_plot$layers, function(l) inherits(l$geom, "GeomPoint")))
+  for (i in point_idx) {
+    sac_plot$layers[[i]]$mapping$shape <- quote(year)
+  }
+  
+  sac_plot <- sac_plot +
+    scale_shape_manual(values = c("2015" = 16, "2022" = 17)) +
+    facet_wrap(~ station_type, scales = "free_x")
   list(incidence_data = incidence_data,
        inext_result = inext_result,
        plot = sac_plot)
