@@ -84,6 +84,7 @@ run_nmds_analysis <- function(prep,
                               trymax = 100,
                               standardize = TRUE,
                               seed = 123,
+                              ref_level = NULL,
                               run_permanova = TRUE,
                               run_betadisper = TRUE,
                               run_simper = FALSE,
@@ -95,6 +96,10 @@ run_nmds_analysis <- function(prep,
   
   comm_matrix <- prep$matrix
   meta <- prep$meta
+  
+  if (!is.null(ref_level)) {
+    meta[[group_col]] <- relevel(factor(meta[[group_col]]), ref = ref_level)
+  }
   
   stopifnot(nrow(comm_matrix) == nrow(meta))
   if (!group_col %in% names(meta)) {
@@ -278,6 +283,7 @@ run_nmds_analysis <- function(prep,
 analyses_bio_patterns <- function(comm, 
                                   meta,
                                   period_col = "period",
+                                  ref_level = NULL,
                                   covariates = c("Mean_phi", "Depth"),
                                   station_col = "GrabSite_station",
                                   station_filter = NULL,
@@ -287,7 +293,7 @@ analyses_bio_patterns <- function(comm,
   #'
   #'@return
   
-  # fail safes?
+  # fail safes
   stopifnot(nrow(comm) == nrow(meta))
   stopifnot(period_col %in% names(meta))
   stopifnot(all(covariates %in% names(meta)))
@@ -305,6 +311,11 @@ analyses_bio_patterns <- function(comm,
            pielou   = pielou)
   
   div_df[[period_col]] <- as.factor(div_df[[period_col]])
+  
+  # Setting reference level 
+  if (!is.null(ref_level)) {
+    div_df[[period_col]] <- relevel(div_df[[period_col]], ref = ref_level)
+  }
   
   explanatory_var <- paste(c(covariates, period_col), collapse = " + ")
   
