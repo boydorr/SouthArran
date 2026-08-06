@@ -1,11 +1,11 @@
 # Analysis
 
 # workflow using adjusted survey data 
-  # pivot wider 
-  # remove data of species list from df_survey data that is not confirmed to a species level
-  # combine any duplicated data 
-  # add environmental grab data 
-  # mutate column to add period of before and after (before = pre 2016) and (after = post 2016)
+# pivot wider 
+# remove data of species list from df_survey data that is not confirmed to a species level
+# combine any duplicated data 
+# add environmental grab data 
+# mutate column to add period of before and after (before = pre 2016) and (after = post 2016)
 
 # Data preparation for analysis 
 prepare_community_data <- function(df_survey,
@@ -17,13 +17,12 @@ prepare_community_data <- function(df_survey,
                                    survey_year_col = "year",
                                    env_site_col = "GrabSite",
                                    env_year_col = "Year",
+                                   station_col = "GrabSite_station",
                                    cutoff_year = 2016,
                                    exclude_samples = NULL) {
   df_survey <- df_survey %>%
     mutate(sample_id = paste(.data[[survey_site_col]], .data[[survey_year_col]], sep = "_"))
   
-  df_env <- df_env %>%
-    mutate(sample_id = paste(.data[[env_site_col]], .data[[env_year_col]], sep = "_"))
   df_env <- df_env %>%
     mutate(sample_id = paste(.data[[env_site_col]], .data[[env_year_col]], sep = "_")) %>%
     distinct(sample_id, .keep_all = TRUE)
@@ -57,7 +56,9 @@ prepare_community_data <- function(df_survey,
     left_join(df_env, by = "sample_id") %>%
     left_join(df_survey %>% distinct(sample_id, .data[[survey_year_col]]), by = "sample_id") %>%
     mutate(period = if_else(.data[[survey_year_col]] < cutoff_year, "Before", "After"),
-           period = factor(period, levels = c("Before", "After")))
+           period = factor(period, levels = c("Before", "After")),
+           GrabSite_station = factor(GrabSite_station)) 
+  
   stopifnot(nrow(meta) == nrow(community_wide))
   
   # Combine metadata/environmental data with the species abundance matrix
@@ -86,7 +87,11 @@ run_nmds_analysis <- function(prep,
                               run_permanova = TRUE,
                               run_betadisper = TRUE,
                               run_simper = FALSE,
-                              plot_title = NULL) {
+                              station_col    = NULL,
+                              station_filter = NULL,
+                              exclude_samples = NULL,
+                              plot_title = NULL,
+                              colors = NULL) {
   
   comm_matrix <- prep$matrix
   meta <- prep$meta
@@ -96,9 +101,28 @@ run_nmds_analysis <- function(prep,
     stop(paste0("group_col '", group_col, "' not found in meta"))
   }
   
+  if (!is.null(station_filter)) {
+    if (is.null(station_col) || !station_col %in% names(meta)) {
+      stop("station_col must be a valid column in meta when station_filter is set")
+    }
+    keep_station <- !is.na(meta[[station_col]]) & 
+      stringr::str_starts(meta[[station_col]], station_filter)
+    comm_matrix <- comm_matrix[keep_station, , drop = FALSE]
+    meta        <- meta[keep_station, , drop = FALSE]
+  }
+  
   # Track sample_id explicitly, not via rownames
   sample_ids <- meta$sample_id
   
+  # Exclude outlier samples 
+  if (!is.null(exclude_samples)) {
+    
+    keep <- !(sample_ids %in% exclude_samples)
+    
+    comm_matrix <- comm_matrix[keep, , drop = FALSE]
+    meta        <- meta[keep, , drop = FALSE]
+    sample_ids  <- sample_ids[keep]
+  }
   # Drop samples with missing covariate data (e.g. no sediment data collected)
   if (!is.null(covariates)) {
     complete_rows <- stats::complete.cases(meta[, covariates, drop = FALSE])
@@ -130,6 +154,9 @@ run_nmds_analysis <- function(prep,
   comm_std <- if (standardize) vegan::wisconsin(comm_matrix) else comm_matrix
   rownames(comm_std) <- sample_ids
   
+  rownames(meta) <- meta$sample_id
+  
+  
   # NMDS
   set.seed(seed)
   nmds_result <- vegan::metaMDS(comm_std,
@@ -158,8 +185,11 @@ run_nmds_analysis <- function(prep,
     ggplot2::theme_minimal() +
     ggplot2::labs(title = plot_title, color = group_col)
   
+  if (!is.null(colors)) {
+    nmds_plot <- nmds_plot + ggplot2::scale_color_manual(values = colors)
+  }
+  
   # PERMANOVA
-  permanova_result <- NULL
   if (run_permanova) {
     explanatory_var <- if (!is.null(covariates)) {
       paste(c(covariates, group_col), collapse = " + ")
@@ -167,10 +197,20 @@ run_nmds_analysis <- function(prep,
       group_col
     }
     formula <- stats::as.formula(paste("comm_std ~", explanatory_var))
-    permanova_result <- vegan::adonis2(formula, data = meta,
-                                       method = distance, permutations = 999,
-                                       by = "margin") 
+    
+    use_strata <- "GrabSite_station" %in% names(meta) && !anyNA(meta$GrabSite_station)
+    
+    meta <- meta[rownames(comm_std), , drop = FALSE]
+    
+    permanova_result <- vegan::adonis2(
+      formula,
+      data = meta,
+      method = distance,
+      permutations = 999,
+      by = "margin",
+      strata = if (use_strata) droplevels(factor(meta$GrabSite_station)) else NULL)
   }
+  
   
   # Betadisper (test of within-group dispersion homogeneity)
   betadisper_result <- NULL
@@ -186,22 +226,35 @@ run_nmds_analysis <- function(prep,
     simper_result  <- vegan::simper(comm_std, meta[[group_col]])
     simper_summary <- summary(simper_result, ordered = TRUE)
     
-    comp_name <- names(simper_summary)[1]
-    
-    simper_top10 <- simper_summary[[comp_name]] %>%
-      tibble::rownames_to_column("species") %>%
-      dplyr::slice_head(n = 10) %>%
-      dplyr::rename(mean_before = av_before, mean_after = av_after) %>%  
-      dplyr::mutate(
-        comparison = comp_name,
-        direction = dplyr::case_when(
-          mean_after > mean_before ~ "Higher After",
-          mean_after < mean_before ~ "Higher Before",
-          TRUE ~ "No change"
+    simper_top10 <- purrr::imap_dfr(simper_summary, function(comp_df, comp_name) {
+      avg_cols   <- grep("^av", names(comp_df), value = TRUE)  
+      grp_labels <- strsplit(comp_name, "_")[[1]]
+      
+      comp_df %>%
+        tibble::rownames_to_column("species") %>%
+        dplyr::slice_head(n = 10) %>%
+        dplyr::mutate(
+          comparison = comp_name,
+          direction = dplyr::case_when(
+            .data[[avg_cols[2]]] > .data[[avg_cols[1]]] ~ paste("Higher in", grp_labels[2]),
+            .data[[avg_cols[2]]] < .data[[avg_cols[1]]] ~ paste("Higher in", grp_labels[1]),
+            TRUE ~ "No change"
+          )
         )
-      )
+    })
+    
+    # Overall top 10 unique species across all comparisons 
+    simper_top10_overall <- simper_top10 %>%
+      dplyr::group_by(species) %>%
+      dplyr::slice_max(average, n = 1, with_ties = FALSE) %>%
+      dplyr::ungroup() %>%
+      dplyr::arrange(dplyr::desc(average)) %>%
+      dplyr::slice_head(n = 10) %>%
+      dplyr::select(species, average, sd, ratio, comparison, direction, p)
+    
   } else {
-    simper_top10 <- NULL
+    simper <- NULL
+    simper_top10_overall <- NULL
   }
   
   # Return everything as a list
@@ -214,27 +267,37 @@ run_nmds_analysis <- function(prep,
     betadisper  = betadisper_result,
     betadisper_anova = betadisper_anova,
     simper      = simper_top10,
+    simper_top10_overall = simper_top10_overall,
     comm_used   = comm_std,
-    meta_used   = meta
-  )
+    meta_used   = meta)
 }
+
+
 
 # Function for biological pattern measurements
 analyses_bio_patterns <- function(comm, 
-                                   meta,
-                                   period_col = "period",
-                                   covariates = c("Mean_phi", "Depth"),
-                                   plot = TRUE) {
+                                  meta,
+                                  period_col = "period",
+                                  covariates = c("Mean_phi", "Depth"),
+                                  station_col = "GrabSite_station",
+                                  station_filter = NULL,
+                                  plot = TRUE) {
+  #'
+  #'@description
+  #'
+  #'@return
   
   # fail safes?
   stopifnot(nrow(comm) == nrow(meta))
   stopifnot(period_col %in% names(meta))
   stopifnot(all(covariates %in% names(meta)))
+  if (!is.null(station_col)) stopifnot(station_col %in% names(meta))
   
   # Diversity metrics
   richness <- specnumber(comm) # S
-  shannon  <- diversity(comm, index = "shannon")  # H'
-  pielou   <- shannon / log(richness) # J = H' / ln(S)
+  H        <- diversity(comm, index = "shannon")
+  shannon  <- exp(H)                                    # exponential Shannon (effective species)
+  pielou   <- ifelse(richness > 1, H / log(richness), NA_real_) 
   
   div_df <- meta %>%
     mutate(richness = richness,
@@ -243,28 +306,39 @@ analyses_bio_patterns <- function(comm,
   
   div_df[[period_col]] <- as.factor(div_df[[period_col]])
   
-  # Model formulas 
-  explanatory_var <- paste(c(covariates, period_col), collapse = " + ") # management period and environmental covariates
-  # Then using the metrics as response variables 
-  f_richness <- as.formula(paste("richness ~", explanatory_var))
-  f_shannon  <- as.formula(paste("shannon ~", explanatory_var))
-  f_pielou   <- as.formula(paste("pielou ~", explanatory_var))
+  explanatory_var <- paste(c(covariates, period_col), collapse = " + ")
   
-  # Fit models
-  lm_richness <- lm(f_richness, data = div_df)
-  lm_shannon  <- lm(f_shannon,  data = div_df)
-  lm_pielou   <- lm(f_pielou,   data = div_df)
+  use_mixed <- !is.null(station_col)
+  
+  if (use_mixed) {
+    div_df[[station_col]] <- as.factor(div_df[[station_col]])
+    rhs <- paste0(explanatory_var, " + (1 | ", station_col, ")")
+  } else {
+    rhs <- explanatory_var
+  }
+  f_richness <- as.formula(paste0("richness ~ ", rhs))
+  f_shannon  <- as.formula(paste0("shannon ~ ",  rhs))
+  f_pielou   <- as.formula(paste0("pielou ~ ",   rhs))
+  
+  if (use_mixed) {
+    lm_richness <- lmerTest::lmer(f_richness, data = div_df, REML = TRUE)
+    lm_shannon  <- lmerTest::lmer(f_shannon,  data = div_df, REML = TRUE)
+    lm_pielou   <- lmerTest::lmer(f_pielou,   data = div_df, REML = TRUE)
+  } else {
+    lm_richness <- lm(f_richness, data = div_df)
+    lm_shannon  <- lm(f_shannon,  data = div_df)
+    lm_pielou   <- lm(f_pielou,   data = div_df)
+  }
   
   models <- list(richness = lm_richness,
                  shannon  = lm_shannon,
                  pielou   = lm_pielou)
   
-  # Put results in a table 
   results <- bind_rows(
     tidy(lm_richness) %>% mutate(response = "Richness"),
-    tidy(lm_shannon)  %>% mutate(response = "Shannon-Wiener"),
+    tidy(lm_shannon) %>% mutate(response = "Exponential Shannon (Hill N1)"),
     tidy(lm_pielou)   %>% mutate(response = "Pielou's evenness")
   )
   
-  list(data = div_df, models = models, summary = results) 
+  list(data = div_df, models = models, summary = results)
 }
