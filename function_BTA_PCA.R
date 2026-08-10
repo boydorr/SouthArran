@@ -359,7 +359,7 @@ run_bta_pca_workflow <- function(filled_matrix,
     tibble::rownames_to_column("trait") %>%
     tidyr::pivot_longer(cols = c(Dim.1, Dim.2), names_to = "PC", values_to = "corr") %>%
     mutate(
-      PC    = recode(PC, Dim.1 = "PC1", Dim.2 = "PC2"),
+      PC    = dplyr::recode(PC, Dim.1 = "PC1", Dim.2 = "PC2"),
       trait = factor(trait, levels = rev(all_traits))
     )
   
@@ -399,11 +399,13 @@ run_bta_pca_workflow <- function(filled_matrix,
     arrowsize = 0.6,
     labelsize = 3.5
   ) +
-    theme_bw() +
-    labs(
-      title = paste("Top", top_n_contrib, "functional traits contributing to PC1 and PC2"),
-      colour = "Contribution (%)"
-    )
+  theme_bw() +
+  labs(
+    title = paste("Top", top_n_contrib, "functional traits contributing to PC1 and PC2"),
+    colour = "Contribution (%)",
+    x = paste0("PC1 (", round(pca_out$pca$eig[1, 2], 1), "%)"),
+    y = paste0("PC2 (", round(pca_out$pca$eig[2, 2], 1), "%)")
+  )
   label_layer <- which(sapply(plot_var_top$layers, function(l) inherits(l$geom, "GeomTextRepel")))
   
   if (length(label_layer) > 0) {
