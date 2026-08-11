@@ -310,7 +310,11 @@ run_bta_pca_workflow <- function(filled_matrix,
     repel = TRUE
   ) +
     ggplot2::theme_minimal() +
-    ggplot2::labs(title = NULL)
+    ggplot2::labs(
+      title = NULL,
+      x = paste0("PC1 (", round(pca_out$pca$eig[1, 2], 1), "%)"),
+      y = paste0("PC2 (", round(pca_out$pca$eig[2, 2], 1), "%)")
+    )
   
   if (!is.null(colors)) {
     plot_ind <- plot_ind +
