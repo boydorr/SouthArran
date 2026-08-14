@@ -2,6 +2,7 @@
 library(iNEXT)
 library(dplyr)
 library(tidyverse)
+library(ggplot2)
 
 # Running the SAC 
 run_station_sac <- function(PA_combined_table,
@@ -24,7 +25,7 @@ run_station_sac <- function(PA_combined_table,
   #'@param nboot 
   #'@param endpoint_multiplier 
   #'
-  #'@return A species accumulation curve based on indicidence data by survey stations
+  #'@return A species accumulation curve based on incidence data by survey stations
   
   meta_cols <- c("sample_id", "GrabSite", "Date", "Latitude", "Longitude",
                  "Depth", "Sediment_type", "Median_phi", "Mean_phi", "Year",

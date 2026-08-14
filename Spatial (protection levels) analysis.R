@@ -4,7 +4,6 @@ library(dplyr)
 library(stringr)
 
 # Getting one row per unique grab site with its coordinates
-# Assign spatial protection zones (High/Medium/Low) to grab sites based on an MPA management-zone shapefile, and attach the result to grab dataframe by site
 add_protection_zones <- function(df_env,
                                  mpa_shapefile,
                                  df_sites,
@@ -17,6 +16,13 @@ add_protection_zones <- function(df_env,
                                  high_pattern = "No Take Zone",
                                  low_pattern = "excepted area",
                                  outside_label = "Outside MPA") {
+  #' @description Function that assigns spatial protection zones (by fishing gear restrictions) to grab sites based on an MPA management-zone shapefile, and attach the result to grab dataframe by site
+  #' @param df_env The environmental dataframe (grab samples)
+  #' @param mpa_shapefile Shapefile with levels of fishing gear restriction in South Arran MPA
+  #' @param df_sites A dataframe that has the sample site coordinates
+  #' 
+  #' @return Updated df_env with protection levels now added 
+  
   
   # getting one row per unique grab site with its coordinates
   site_locations <- df_sites %>%
@@ -45,7 +51,9 @@ add_protection_zones <- function(df_env,
     mutate(protection_level = as.character(protection_level),
            protection_level = if_else(is.na(protection_level), outside_label, protection_level),
            protection_level = factor(protection_level,
-                                     levels = c("Dredge Prohibited", "Demersal Trawl and Dredge Prohibited", "No Take Zone", outside_label))) %>%
+                                     levels = c("Dredge Prohibited", 
+                                                "Demersal Trawl and Dredge Prohibited",
+                                                "No Take Zone", outside_label))) %>%
     select(all_of(site_col), protection_level)
   
   #Attach to df_env
@@ -56,7 +64,7 @@ add_protection_zones <- function(df_env,
 }
 
 
-# Changing Depth and phi size to categorical levels
+# Changing depth and phi size to categorical levels
 add_zones_protect_depth_sedi <- function(df_env,
                                  mpa_shapefile,
                                  df_sites,
@@ -71,6 +79,13 @@ add_zones_protect_depth_sedi <- function(df_env,
                                  outside_label = "Outside MPA",
                                  depth_col = "Depth",
                                  sediment_col = "Sediment_type") {
+  #' @description Function that adds environmental protection levels and converts dept and sediment grain size into categorical variables 
+  #' @param df_env The environmental dataframe (grab samples)
+  #' @param mpa_shapefile Shapefile with levels of fishing gear restriction in South Arran MPA
+  #' @param df_sites A dataframe that has the sample site coordinates
+  #' 
+  #' @return Updated df_env file with these added categorical variables added
+  
   
   # getting one row per unique grab site with its coordinates
   site_locations <- df_sites %>%
@@ -99,7 +114,9 @@ add_zones_protect_depth_sedi <- function(df_env,
     mutate(protection_level = as.character(protection_level),
            protection_level = if_else(is.na(protection_level), outside_label, protection_level),
            protection_level = factor(protection_level,
-                                     levels = c("Dredge Prohibited, Trawl permitted subject to conditions", "Demersal Trawl and Dredge Prohibited", "No Take Zone", outside_label))) %>%
+                                     levels = c("Dredge Prohibited, Trawl permitted subject to conditions", 
+                                                "Demersal Trawl and Dredge Prohibited", 
+                                                "No Take Zone", outside_label))) %>%
     select(all_of(site_col), protection_level)
   
   # Attach to df_env

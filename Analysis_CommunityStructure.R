@@ -1,11 +1,22 @@
-# Analysis
+# Libraries loading 
+library(dplyr) 
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(vegan)
+library(lmerTest)
+library(car)
+library(broom)
+library(purrr)
+library(tibble)
+library(stringr)
 
-# workflow using adjusted survey data 
-# pivot wider 
-# remove data of species list from df_survey data that is not confirmed to a species level
-# combine any duplicated data 
-# add environmental grab data 
-# mutate column to add period of before and after (before = pre 2016) and (after = post 2016)
+# Workflow
+  # pivot wider 
+  # remove data of species list from df_survey data that is not confirmed to a species level
+  # combine any duplicated data 
+  # add environmental grab data 
+  # mutate column to add period of before and after (before = pre 2016) and (after = post 2016)
 
 # Data preparation for analysis 
 prepare_community_data <- function(df_survey,
@@ -20,6 +31,13 @@ prepare_community_data <- function(df_survey,
                                    station_col = "GrabSite_station",
                                    cutoff_year = 2016,
                                    exclude_samples = NULL) {
+  #' Data preparation pipeline 
+  #' @description A functional that takes raw survey data (species and grabs) ad creates a clean abundance matrix for future analysis
+  #' @param df_survey species abundance survey data
+  #' @param df_env environmental data (grab location, and sediment analysis) 
+  #' 
+  #' @return Four objects in a list (matrix, meta, sample_ids, and combined which is metadata + species matrix combined)
+  
   df_survey <- df_survey %>%
     mutate(sample_id = paste(.data[[survey_site_col]], .data[[survey_year_col]], sep = "_"))
   
@@ -43,7 +61,7 @@ prepare_community_data <- function(df_survey,
     summarise(abundance = sum(.data[[abundance_col]], na.rm = TRUE),
               .groups = "drop")                        # combine duplicated records
   
-  # pivot to appropriate form for analysis 
+  # Pivot to appropriate form for analysis (wide)
   community_wide <- df_clean %>%
     pivot_wider(names_from = all_of(species_col),
                 values_from = abundance,
@@ -61,10 +79,9 @@ prepare_community_data <- function(df_survey,
   
   stopifnot(nrow(meta) == nrow(community_wide))
   
-  # Combine metadata/environmental data with the species abundance matrix
-  # into a single wide table, matched on sample_id
+  # Combine metadata/environmental data with the species abundance matrix into a single wide table
   combined <- meta %>%
-    left_join(community_wide, by = "sample_id")
+    left_join(community_wide, by = "sample_id") #  matched on sample_id
   
   list(
     matrix     = community_wide %>% select(-sample_id) %>% as.data.frame(),
@@ -93,6 +110,12 @@ run_nmds_analysis <- function(prep,
                               exclude_samples = NULL,
                               plot_title = NULL,
                               colors = NULL) {
+  #' Runs a multivariate community ecology workflow
+  #' 
+  #' @description  This function creates NMDS ordination and additional standard supporting tests such as PERMANOVA, betadisper, SIMPER
+  #' @param prep The cleaned data prepped from the previous function
+  #' 
+  #' @return A list of raw meta object, NMDS plot, PERMANOVA, betadisper anova, and SIMPER tables
   
   comm_matrix <- prep$matrix
   meta <- prep$meta
@@ -116,7 +139,7 @@ run_nmds_analysis <- function(prep,
     meta        <- meta[keep_station, , drop = FALSE]
   }
   
-  # Track sample_id explicitly, not via rownames
+  # Track sample_id, not via rownames
   sample_ids <- meta$sample_id
   
   # Exclude outlier samples 
@@ -141,7 +164,7 @@ run_nmds_analysis <- function(prep,
     }
   }
   
-  # Drop empty rows (samples with zero total abundance) to avoid metaMDS/vegdist errors
+  # Drop empty rows (samples with zero total abundance) to avoid errors
   row_sums <- rowSums(comm_matrix)
   if (any(row_sums == 0)) {
     empty_ids <- sample_ids[row_sums == 0]
@@ -172,7 +195,7 @@ run_nmds_analysis <- function(prep,
   
   # Extract site scores
   site_scores <- as.data.frame(vegan::scores(nmds_result, display = "sites"))
-  site_scores$sample_id <- sample_ids   # always correct now, no rownames guessing
+  site_scores$sample_id <- sample_ids   # no rownames guessing
   
   plot_df <- site_scores %>%
     dplyr::left_join(meta, by = "sample_id")
@@ -231,25 +254,34 @@ run_nmds_analysis <- function(prep,
     simper_result  <- vegan::simper(comm_std, meta[[group_col]])
     simper_summary <- summary(simper_result, ordered = TRUE)
     
-    simper_top10 <- purrr::imap_dfr(simper_summary, function(comp_df, comp_name) {
-      avg_cols   <- grep("^av", names(comp_df), value = TRUE)  
-      grp_labels <- strsplit(comp_name, "_")[[1]]
-      
+    # Pull every comparison into one long table
+    simper_all <- purrr::imap_dfr(simper_summary, function(comp_df, comp_name) {
       comp_df %>%
         tibble::rownames_to_column("species") %>%
-        dplyr::slice_head(n = 10) %>%
-        dplyr::mutate(
-          comparison = comp_name,
-          direction = dplyr::case_when(
-            .data[[avg_cols[2]]] > .data[[avg_cols[1]]] ~ paste("Higher in", grp_labels[2]),
-            .data[[avg_cols[2]]] < .data[[avg_cols[1]]] ~ paste("Higher in", grp_labels[1]),
-            TRUE ~ "No change"
-          )
-        )
+        dplyr::mutate(comparison = comp_name)
     })
     
-    # Overall top 10 unique species across all comparisons 
+    # Per-comparison top 10
+    simper_top10 <- simper_all %>%
+      dplyr::group_by(comparison) %>%
+      dplyr::group_modify(~ {
+        grp_labels <- strsplit(.y$comparison[1], "_")[[1]]
+        avg_cols   <- grep("^av", names(.x), value = TRUE)
+        .x %>%
+          dplyr::slice_head(n = 10) %>%
+          dplyr::mutate(
+            direction = dplyr::case_when(
+              .data[[avg_cols[2]]] > .data[[avg_cols[1]]] ~ paste("Higher in", grp_labels[2]),
+              .data[[avg_cols[2]]] < .data[[avg_cols[1]]] ~ paste("Higher in", grp_labels[1]),
+              TRUE ~ "No change"
+            )
+          )
+      }) %>%
+      dplyr::ungroup()
+    
+    # Overall top 10 unique species, ranked on significance
     simper_top10_overall <- simper_top10 %>%
+      dplyr::filter(p < 0.05) %>%
       dplyr::group_by(species) %>%
       dplyr::slice_max(average, n = 1, with_ties = FALSE) %>%
       dplyr::ungroup() %>%
@@ -258,7 +290,8 @@ run_nmds_analysis <- function(prep,
       dplyr::select(species, average, sd, ratio, comparison, direction, p)
     
   } else {
-    simper <- NULL
+    simper_all <- NULL
+    simper_top10 <- NULL
     simper_top10_overall <- NULL
   }
   
@@ -272,6 +305,7 @@ run_nmds_analysis <- function(prep,
     betadisper  = betadisper_result,
     betadisper_anova = betadisper_anova,
     simper      = simper_top10,
+    simper_all  = simper_all,
     simper_top10_overall = simper_top10_overall,
     comm_used   = comm_std,
     meta_used   = meta)
@@ -288,10 +322,11 @@ analyses_bio_patterns <- function(comm,
                                   station_col = "GrabSite_station",
                                   station_filter = NULL,
                                   plot = TRUE) {
+  #'@description A function that computes biodiversity measurements (Richness, Shannon Diversity, Pielou's evenness) from a community matrix and test them against group covariates (period/ protection levels) using linear models
+  #'@param comm species abundance matrix (species x samples)
+  #'@param meta metadata frame
   #'
-  #'@description
-  #'
-  #'@return
+  #'@return A list with data, models, summary 
   
   # fail safes
   stopifnot(nrow(comm) == nrow(meta))
@@ -302,7 +337,7 @@ analyses_bio_patterns <- function(comm,
   # Diversity metrics
   richness <- specnumber(comm) # S
   H        <- diversity(comm, index = "shannon")
-  shannon  <- exp(H)                                    # exponential Shannon (effective species)
+  shannon  <- exp(H) # exponential Shannon (effective species)
   pielou   <- ifelse(richness > 1, H / log(richness), NA_real_) 
   
   div_df <- meta %>%

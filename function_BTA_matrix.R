@@ -1,4 +1,9 @@
 # BTA coding 
+library(dplyr)
+library(stringr)
+library(readr)
+library(tibble)
+library(purrr)
 
 # Building Matrix for BTA
 # remove coding source, date etc
@@ -12,13 +17,11 @@ build_empty_trait_matrix <- function(
     min_site_prop     = 0.50,
     top_abund_prop    = 0.90,
     fetlar_abund_prop = 0.75) {
-  #' What does function do in a line?
+  #' @description Function that builds an empty trait matrix for BTA (fuzzy coding )
+  #' @param survey_data Dataframe with species abundance count
+  #' @param biotic_path Path to where the stored Biotic csv file is saved
   #' 
-  #' @description 
-  #' @param 
-  #' @param 
-  #' 
-  #' @return 
+  #' @return Empty matrix to be manually filled in with fuzzy coding 
   
   site_filter <- match.arg(site_filter)
   
@@ -56,12 +59,12 @@ build_empty_trait_matrix <- function(
     filter(!is.na(abundance), abundance > 0) %>%
     group_by(bta_name) %>%
     summarise(
-      n_sites     = n_distinct(GrabSite), #add _base????
+      n_sites     = n_distinct(GrabSite), 
       total_abund = sum(abundance, na.rm = TRUE),
       .groups     = "drop"
     )
   
-  total_sites <- n_distinct( survey_data_bta$GrabSite) #add _base????
+  total_sites <- n_distinct( survey_data_bta$GrabSite) 
   
   cumulative <- species_summary %>%
     arrange(desc(total_abund)) %>%
@@ -192,15 +195,15 @@ build_empty_trait_matrix <- function(
 
 
 # Function that checks the BTA trait table (fuzzy coding adds up)
-check_trait_matrix <- function(filled_matrix, trait_groups, target_sum = 3) {
+check_trait_matrix <- function(filled_matrix,
+                               trait_groups,
+                               target_sum = 3) {
   
-  #' What does function do in a line?
+  #' @description Function that validates the BTA trait table fuzzy coding (must equal 3 if trait information present)
+  #' @param filled_matrix Matrix with the species, abundance and traits with fuzzy coding assigned
+  #' @param trait_groups List of the traits (selected for this study)
   #' 
-  #' @description 
-  #' @param 
-  #' @param 
-  #' 
-  #' @return 
+  #' @return Error message if there is a problem or correct message if it is all valid
   
   all_trait_cols <- unlist(trait_groups, use.names = FALSE)
   

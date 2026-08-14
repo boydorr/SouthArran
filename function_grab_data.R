@@ -1,3 +1,9 @@
+# loading libraries 
+library(readxl)
+library(dplyr)
+library(stringr)
+library(lubridate)
+
 # Function for reading in grabdata
 
 read_grabdata <- function(path = "data/grab_data/grabsites.xlsx",
@@ -35,14 +41,13 @@ read_grabdata <- function(path = "data/grab_data/grabsites.xlsx",
     mutate(
       GrabSite = str_trim(GrabSite),
       
-      # Survey station (letters + digits at beginning) —
-      # but NOT if it's just "G" + digits (that's a grab number, not a station)
-      GrabSite_station = str_extract(GrabSite, "^(?!G\\d)[A-Za-z]+\\d+"),
+      # Survey station (letters + digits at beginning)
+      GrabSite_station = str_extract(GrabSite, "^(?!G\\d)[A-Za-z]+\\d+"), # but not if it's just "G" + digits (grabnumber not a station)
       
       # Grab site base identifier — keep everything before the replicate "-"
       GrabSite_base = str_extract(GrabSite, "^[^-]+"),
       
-      # Numeric grab site number alone, if you need it separately
+      # Numeric grab site number alone
       GrabSite_number = coalesce(
         str_extract(GrabSite, "(?<=_)\\d+"),
         str_extract(GrabSite, "(?<=G)\\d+")
@@ -90,9 +95,6 @@ validate_records_and_grabs <- function(records, grabs) {
   
   # Check for grabs missing from records
   missing_from_records <- setdiff(grabs_keys, records_keys)
-  
-  # Check for records missing from grabs
-  missing_from_grabs <- setdiff(records_keys, grabs_keys)
   
   if (length(missing_from_records) == 0 && length(missing_from_grabs) == 0) {
     return(TRUE)

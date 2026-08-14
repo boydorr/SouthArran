@@ -1,8 +1,16 @@
 # PCA for BTA
+# loading libraries
 library(tidyverse)
 library(FactoMineR)
 library(factoextra)
 library(dplyr)
+library(tibble)
+library(stringr)
+library(lmerTest)
+library(lme4)
+library(car)
+library(patchwork)
+library(ggplot2)
 
 
 # Prepping df_surveydata for PCA
@@ -17,9 +25,17 @@ df_surveydata <- df_surveydata %>%
 sum(is.na(df_surveydata$sample_id)) # if didn't have a match which ones
 df_surveydata %>% dplyr::filter(is.na(sample_id)) %>% dplyr::distinct(GrabSite, GrabSite_base, GrabNumber, year)
 
+
+
 # Creating weighted values function
-standardise_traits <- function(filled_matrix, trait_groups) {
-  
+standardise_traits <- function(filled_matrix,
+                               trait_groups) {
+  #' @description A function that creates weighted values within columns for fuzzy coding (BTA)
+  #' @param filled_matrixa Data frame (or matrix-like object) of trait values
+  #' @param trait_groups List of traits (selected for this study)
+  #' 
+  #' @return Dataframe
+
   out <- filled_matrix
   
   for (grp in names(trait_groups)) {
@@ -45,13 +61,11 @@ build_sample_trait_matrix <- function(abundance_data,
                                       abund_col    = "value",
                                       trait_cols   = NULL,
                                       trait_groups = NULL) {
-  #' What does function do in a line?
+  #' @description This function combines abundance data with standardised trait data to produce community-weighted mean traits per sample
+  #' @param abundance Dataframe with taxon names, sample IDs, and abundance values (in long format)
+  #' @param trait_matrix_std Standarised trait matrix (Output from previous function)
   #' 
-  #' @description 
-  #' @param 
-  #' @param 
-  #' 
-  #' @return 
+  #' @return A sample x trait matrix (wide format)- abundance-weighted mean trait value per sample
   
   if (is.null(trait_cols)) {
     if (is.null(trait_groups)) {
@@ -100,8 +114,16 @@ build_sample_trait_matrix <- function(abundance_data,
   sample_trait
 }
 
+
 #  Run the PCA
-run_bta_pca <- function(sample_trait_matrix, sample_col = "GrabSite") {
+run_bta_pca <- function(sample_trait_matrix,
+                        sample_col = "GrabSite") {
+  #' @description Function that runs a PCA on the sample x trait matrix
+  #' @param sample_trait_matrix Matrix output from previous 
+  #' @param 
+  #' 
+  #' @return PCA 
+  
   mat <- sample_trait_matrix %>%
     column_to_rownames(sample_col)
   
@@ -131,21 +153,20 @@ run_bta_pca <- function(sample_trait_matrix, sample_col = "GrabSite") {
 }
 
 
-# Fit a linear model --> PC1/PC2 ~ management period + phi + depth
-run_pca_lm <- function(pca_scores, metadata,
+# Fit a linear model 
+run_pca_lm <- function(pca_scores,
+                       metadata,
                        sample_col = "GrabSite",
                        period_col = "management_period",
                        protection_col = NULL,
                        station_col    = NULL,
                        phi_col    = "Mean_phi",
                        depth_col  = "Depth") {
-  #' What does function do in a line?
+  #' @description Function that fits a linear model using the formula - PC1/PC2 ~ management period(or protection level) + phi + depth
+  #' @param pca_scores Score output from previous function
+  #' @param metadata Dataframe with species and environmental factors
   #' 
-  #' @description 
-  #' @param 
-  #' @param 
-  #' 
-  #' @return 
+  #' @return linear model results
   
   join_cols <- c(sample_col, period_col, phi_col, depth_col,
                  protection_col, station_col)
@@ -226,15 +247,13 @@ run_bta_pca_workflow <- function(filled_matrix,
                                  top_n_contrib  = 10,
                                  run_diagnostics = TRUE,
                                  colors = NULL) {
-  #' What does function do in a line?
+  #' @description This function wraps the previous three functions into a BTA workflow
+  #' @param filled_matrix Taxon x trait matrix
+  #' @param trait_groups Named list of traits (selected for this study)
   #' 
-  #' @description 
-  #' @param 
-  #' @param 
-  #' 
-  #' @return 
+  #' @return A list: sample-trait matrix, PCA full output, plots and linear model output
   
-  # restrict to GrabSites where station starts with a given letter looking for mearle = D or sediment = T
+  # restrict to GrabSites where station starts with a given letter looking for maerle = D or sediment = T
   if (!is.null(station_filter)) {
     if (is.null(station_col)) {
       stop("station_col must be supplied (e.g. 'GrabSite_station') when using station_filter.")
@@ -374,7 +393,9 @@ run_bta_pca_workflow <- function(filled_matrix,
       ggplot2::geom_tile(ggplot2::aes(fill = corr), color = "white",
                          linewidth = 0.2, width = 0.95, height = 0.95) +
       ggplot2::scale_fill_gradient2(
-        low = "#B2182B", mid = "white", high = "#2166AC",
+        low = "#B2182B", 
+        mid = "white", 
+        high = "#2166AC",
         midpoint = 0, limits = c(-1, 1), name = "Corr"
       ) +
       ggplot2::theme_minimal() +

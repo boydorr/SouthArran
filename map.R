@@ -12,7 +12,7 @@ library(leaflet)
 df_map <- read_excel("data/grab_data/grabsites.xlsx") %>%
   filter(!is.na(GrabSite)) %>%                      # drop blank row
   mutate(
-    Longitude = as.numeric(Longitude),               # convert to numeric FIRST
+    Longitude = as.numeric(Longitude),               # convert to numeric first
     Year = case_when(
       str_detect(as.character(Date), "^\\d{4}$") ~ as.integer(Date),
       is.numeric(Date) ~ year(as.Date(as.numeric(Date), origin = "1899-12-30")),
@@ -56,6 +56,8 @@ south_arran <- south_arran %>%
     TRUE ~ "Demersal trawl and dredge prohibited"
   ))
 
+
+# VISUALISING MAPS
 # Static map
 ggplot() +
   geom_sf(data = south_arran, aes(fill = zone), colour = "black", alpha = 0.5) +

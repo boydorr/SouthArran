@@ -1,3 +1,9 @@
+library(readxl)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(purrr)
+library(SHARK4R)
 
 # Creating Read function
 read_speciesdata <- function(
