@@ -36,17 +36,18 @@ Instructions for reproducing the data cleaning, processing and analysis workflow
 
 [project_script.Rmd](project_script.Rmd)
 
-- This is the completed workflow of the project, including instructions on how to use the functions I made. 
+This is the completed workflow of the project, including instructions on how to use the functions I made. 
 The main aspects of this script involve reading and cleaning the raw data files, creating the empty BTA fuzzy coding matrix, and conducting the analyses used to answer my thesis objectives. Initially, the script is applied to all data points before being filtered to include only T survey stations, which are more relevant to my study and contain complete data. 
 Biodiversity metrics and NMDS plots were then generated to analyse shifts in community structure and address Objective 1. 
 Next, the manually completed BTA matrix was imported and analysed to investigate changes in functional traits, addressing Objective 2. The outputs included a PCA, a biplot, and corresponding statistical analyses using linear models. Finally, a species accumulation curve based on Shannon diversity and grab samples was produced to assess current survey effort.
 
 [map.R](map.R)
-- Script that produces a map of the survey sites within South Arran MPA
-- Fishing gear restrictions included
+
+Script that produces a map of the survey sites within South Arran MPA (Fishing gear restrictions included)
 
 
 [LRT-model.R](LRT-model.R)
+
 Script that runs Likelihood Ratio Tests (LRTs). Using most plausible complex model was plotted, and LRTs were used to assess the significance of interaction and main effects
 
 
@@ -65,7 +66,7 @@ The species abundance count
 [Environmental information](data/grab_data)
 The grab samples with location coordinates, depth (m), sediment type and mean phi (grain size)
 
-[Fishing regulation boundaries](data/Fishing measures relevant to South Arran)
+[Fishing regulation boundaries](data/"Fishing measures relevant to South Arran")
 
 
 #### Additional files
