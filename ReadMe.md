@@ -71,7 +71,7 @@ The grab samples with location coordinates, depth (m), sediment type and mean ph
 
 #### Additional files
 
-[Species name corrections](data/unassigned species list.xlsx)
+[Species name corrections](<data/unassigned species list.xlsx>)
 to be read through before submitting names through the WoRMS database
 
 
