@@ -79,7 +79,7 @@ add_zones_protect_depth_sedi <- function(df_env,
                                  outside_label = "Outside MPA",
                                  depth_col = "Depth",
                                  sediment_col = "Sediment_type") {
-  #' @description Function that adds environmental protection levels and converts dept and sediment grain size into categorical variables 
+  #' @description Function that adds environmental protection levels and converts depth and sediment grain size into categorical variables 
   #' @param df_env The environmental dataframe (grab samples)
   #' @param mpa_shapefile Shapefile with levels of fishing gear restriction in South Arran MPA
   #' @param df_sites A dataframe that has the sample site coordinates
@@ -153,3 +153,4 @@ add_zones_protect_depth_sedi <- function(df_env,
   
   df_env
 }
+
