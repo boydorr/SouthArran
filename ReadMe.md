@@ -66,7 +66,7 @@ The species abundance count
 [Environmental information](data/grab_data)
 The grab samples with location coordinates, depth (m), sediment type and mean phi (grain size)
 
-[Fishing regulation boundaries](data/"Fishing measures relevant to South Arran")
+[Fishing regulation boundaries](<data/Fishing measures relevant to South Arran>)
 
 
 #### Additional files
