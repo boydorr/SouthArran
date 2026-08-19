@@ -32,7 +32,7 @@ prepare_community_data <- function(df_survey,
                                    cutoff_year = 2016,
                                    exclude_samples = NULL) {
   #' Data preparation pipeline 
-  #' @description A functional that takes raw survey data (species and grabs) ad creates a clean abundance matrix for future analysis
+  #' @description A function that takes raw survey data (species and grabs) and creates a clean abundance matrix for future analysis
   #' @param df_survey species abundance survey data
   #' @param df_env environmental data (grab location, and sediment analysis) 
   #' 
@@ -261,14 +261,14 @@ run_nmds_analysis <- function(prep,
         dplyr::mutate(comparison = comp_name)
     })
     
-    # Per-comparison top 10
-    simper_top10 <- simper_all %>%
-      dplyr::group_by(comparison) %>%
-      dplyr::group_modify(~ {
+    # every pairwise comparison 
+    simper_top10 <- simpler_all %>%
+      dplyr::group_by(comaprison)%>%
+      dplyr::group_modify( ~{
         grp_labels <- strsplit(.y$comparison[1], "_")[[1]]
-        avg_cols   <- grep("^av", names(.x), value = TRUE)
+        avg_cols <- grep("^av", names(.x), value=TRUE)
         .x %>%
-          dplyr::slice_head(n = 10) %>%
+          dplyr::slice_head(n=10) %>%
           dplyr::mutate(
             direction = dplyr::case_when(
               .data[[avg_cols[2]]] > .data[[avg_cols[1]]] ~ paste("Higher in", grp_labels[2]),
@@ -276,23 +276,14 @@ run_nmds_analysis <- function(prep,
               TRUE ~ "No change"
             )
           )
-      }) %>%
-      dplyr::ungroup()
-    
-    # Overall top 10 unique species, ranked on significance
-    simper_top10_overall <- simper_top10 %>%
-      dplyr::filter(p < 0.05) %>%
-      dplyr::group_by(species) %>%
-      dplyr::slice_max(average, n = 1, with_ties = FALSE) %>%
-      dplyr::ungroup() %>%
-      dplyr::arrange(dplyr::desc(average)) %>%
-      dplyr::slice_head(n = 10) %>%
-      dplyr::select(species, average, sd, ratio, comparison, direction, p)
+      }) %>% 
+      dplyr::ungroup() %>% 
+      dplyr::unfilter(p<0.05) %>% 
+      dplyr::arrange(comaprison, dplyr::desc(average))
     
   } else {
     simper_all <- NULL
     simper_top10 <- NULL
-    simper_top10_overall <- NULL
   }
   
   # Return everything as a list
@@ -306,7 +297,6 @@ run_nmds_analysis <- function(prep,
     betadisper_anova = betadisper_anova,
     simper      = simper_top10,
     simper_all  = simper_all,
-    simper_top10_overall = simper_top10_overall,
     comm_used   = comm_std,
     meta_used   = meta)
 }

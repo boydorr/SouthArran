@@ -12,7 +12,7 @@ read_grabdata <- function(path = "data/grab_data/grabsites.xlsx",
   #'@description This function reads in all the grab environmental and spatial data, accounts for different date formats, and validates the grab information against the records from survey data.
   #' 
   #' @param path Setting the file location to read grab data 
-  #' @param records Arguement to choose what records to pass through to validate data
+  #' @param records Argument to choose what records to pass through to validate data
   #' 
   #' @returns Cleaned grabsite survey dataframe
   

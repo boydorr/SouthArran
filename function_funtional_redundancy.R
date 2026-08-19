@@ -92,7 +92,7 @@ run_fr_lm <- function(fd_fr,
                       depth_col = "Depth",
                       station_col = NULL,
                       ref_level = NULL) {
-  #' @description A functional that performs linear model with FR itself (response) against period/protection + phi/depth (explanatory variable)
+  #' @description A function that performs linear model with FR itself (response) against period/protection + phi/depth (explanatory variable)
   #' 
   #' @return Linear model
   
